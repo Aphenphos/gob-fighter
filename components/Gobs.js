@@ -1,5 +1,5 @@
 
-export default function createGob(root, { handleAttackGob }) {
+export default function createGobs(root, { handleAttackGob }) {
     return ({ gobs }) => {
         root.innerHTML = '';
 
