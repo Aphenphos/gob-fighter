@@ -30,4 +30,12 @@ export function Gob({ gob, handleAttackGob }) {
 
     button.append(gobNameEl, gobFaceEl);
 
+    if (gob.hp === 0) {
+        const dead = document.createElement('span');
+        dead.classList.add('dead');
+        dead.textContent('im ded');
+        button.append(dead);
+    }
+    return button;
+
 }
