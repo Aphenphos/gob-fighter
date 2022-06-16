@@ -5,21 +5,23 @@ const state = {};
 export function initialize() {
     
     state.attackDamage = [0, 0, 0, 1, 1, 1, 2, 2, 3];
-    state.combatLog = [];
+    state.combatEvents = [];
+    state.gob.hp = [1, 5, 10, 10, 100];
     state.gobs = [
         { name: 'Gobber', hp: 10 },
         { name: 'Goober', hp: 15 },
-        { name: 'Gober', hp: 5 },
+        { name: 'Gober', hp: 0 },
     ];
 }
 
 initialize();
 export default state;
 
-export function logCombat(combatEvent) {
-    state.combatLog.push(combatEvent);
-    console.log(combatEvent);
+export function setCombatEvent(combatEvent) {
+    state.combatEvents.push(combatEvent);
 }
+
+
 
 export function addGob(gob) {
     state.gobs.push(gob);

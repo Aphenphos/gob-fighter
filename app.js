@@ -1,31 +1,60 @@
 import { getRandomItem, getRandomIndex } from './utils.js';
 
 import state, {
-    logCombat,
     addGob,
+    setCombatEvent,
     updateGob,
 } from './state.js';
 
-import createCombatLog from './components/CombatLog.js';
+import logCombatEvent from './components/CombatLog.js';
 import createNewGob from './components/NewGob.js';
-import createGob from './components/Gobs.js';
-import Gob from './components/Gobs.js';
+import createGobs from './components/Gobs.js';
 
-const CombatLog = createCombatLog(document.querySelector('#combat-log'));
+const CombatLog = logCombatEvent(document.querySelector('#combat-log'));
 
-const Gobs = createGobs(document.querySelector('.enemy-container'), {
+const Gobs = createGobs(document.querySelector('#enemy-container'), {
     handleAttackGob: (gob) => {
-        if (state.attackDamage === 0){logCombat('You Missed!');}
-        if (state.attackDamage === 1){logCombat('You did 1 Damage!');}
-        if (state.attackDamage === 2){logCombat('You did 2 Damage!');}
-        if (state.attackDamage === 3){logCombat('You did 3 Damage!');}
+        if (state.attackDamage === 0){console.log(state.attackDamage); setCombatEvent('you missed');}
+        else if (state.attackDamage === 1){
+            gob.hp - state.attackDamage; 
+            setCombatEvent('you did 1 damage');
+            updateGob(gob);
+        }
+        else if (state.attackDamage === 2){
+            gob.hp - state.attackDamage; 
+            setCombatEvent('you did 2 damage');
+            updateGob(gob);
+        }
+        else if (state.attackDamage === 3){
+            gob.hp - state.attackDamage; 
+            setCombatEvent('you did 3 damage');
+            updateGob(gob);
+        }
+        display();
     } }
+
 );
+
+const AddGob = createNewGob(document.querySelector('#new-gob-input'), {
+    handleNewGob: (name) => {
+        const gob = {
+            name,
+            hp: getRandomItem(state.gob.hp)
+        };
+        addGob(gob);
+        display();
+    }
+});
 
 
 function display() {
+    CombatLog({ combatLog: state.combatEvents });
+    Gobs ({ gobs: state.gobs });
+    AddGob({});
 
 }
+
+
 
 
 display();

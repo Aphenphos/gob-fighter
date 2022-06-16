@@ -10,7 +10,7 @@ export default function createGobs(root, { handleAttackGob }) {
     };
 }
 
-const gobFaces = ['(◣_◢)', 'O_O', 'X_X'];
+const gobFaces = ['X_x', 'O_O', '(◣_◢)'];
 
 export function Gob({ gob, handleAttackGob }) {
     const button = document.createElement('button');
@@ -24,18 +24,23 @@ export function Gob({ gob, handleAttackGob }) {
     gobNameEl.classList.add('gob-name');
     gobNameEl.textContent = gob.name;
 
+    const gobHpEl = document.createElement('span');
+    gobHpEl.classList.add('gob-hp');
+    gobHpEl.textContent = gob.hp;
+
     const gobFaceEl = document.createElement('span');
     gobFaceEl.classList.add('gob-faces');
-    gobFaceEl.textContent = gobFaces[gob.hp];
-
-    button.append(gobNameEl, gobFaceEl);
+    if (gobFaces[gob.hp] === undefined){
+        gobFaceEl.textContent = '<>_<>';
+    } else {gobFaceEl.textContent = gobFaces[gob.hp];}
 
     if (gob.hp === 0) {
-        const dead = document.createElement('span');
-        dead.classList.add('dead');
-        dead.textContent('im ded');
-        button.append(dead);
+        gobNameEl.classList.add('dead-gob');
+
     }
+    button.append(gobNameEl, gobFaceEl);
+
+  
     return button;
 
 }

@@ -1,5 +1,7 @@
-export default function createCombatLog(root) {
+export default function logCombatEvent(root) {
     return ({ combatEvent }) => {
         root.textContent = combatEvent;
     };
 }
+
+
