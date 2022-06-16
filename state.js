@@ -4,10 +4,10 @@ const state = {};
 
 export function initialize() {
     
-    state.player.attackDamage = [0, 0, 0, 1, 1, 1, 2, 2, 3];
-    state.gob.attackDamage = [0, 0, 0, 1, 1, 1, 2, 2, 2];
+    state.attackDamage = [0, 0, 0, 1, 1, 1, 2, 2, 3];
+    state.Damage = [0, 0, 0, 1, 1, 1, 2, 2, 2];
     state.combatEvents = [];
-    state.gob.hp = [1, 5, 10, 10, 100];
+    state.hp = [1, 5, 10, 10, 100];
     state.gobs = [
         { name: 'Gobber', hp: 10 },
         { name: 'Goober', hp: 15 },

@@ -36,7 +36,6 @@ export function Gob({ gob, handleAttackGob }) {
 
     if (gob.hp === 0) {
         gobNameEl.classList.add('dead-gob');
-
     }
     button.append(gobNameEl, gobFaceEl);
 

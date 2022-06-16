@@ -6,6 +6,7 @@ export default function createNewGob(root, { handleNewGob }) {
         e.preventDefault();
         const formData = new FormData(form);
         handleNewGob(formData.get('name'));
+        
     });
 
     return () => { };

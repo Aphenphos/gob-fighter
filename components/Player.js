@@ -1,7 +1,7 @@
 export default function createPlayer(root) {
     return ({ player }) => {
-        root.innerHTML = '';
         const playerElement = Player({ player });
+        root.append(playerElement);
     }; 
 }
 
