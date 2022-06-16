@@ -39,7 +39,7 @@ const AddGob = createNewGob(document.querySelector('#new-gob-input'), {
     handleNewGob: (name) => {
         const gob = {
             name,
-            hp: getRandomItem(state.gob.hp)
+            hp: state.gob.hp
         };
         addGob(gob);
         display();

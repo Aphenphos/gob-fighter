@@ -4,7 +4,8 @@ const state = {};
 
 export function initialize() {
     
-    state.attackDamage = [0, 0, 0, 1, 1, 1, 2, 2, 3];
+    state.player.attackDamage = [0, 0, 0, 1, 1, 1, 2, 2, 3];
+    state.gob.attackDamage = [0, 0, 0, 1, 1, 1, 2, 2, 2];
     state.combatEvents = [];
     state.gob.hp = [1, 5, 10, 10, 100];
     state.gobs = [
@@ -20,8 +21,6 @@ export default state;
 export function setCombatEvent(combatEvent) {
     state.combatEvents.push(combatEvent);
 }
-
-
 
 export function addGob(gob) {
     state.gobs.push(gob);
