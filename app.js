@@ -1,59 +1,98 @@
-import { getRandomItem, getRandomIndex } from './utils.js';
 
-import state, {
-    addGob,
-    setCombatEvent,
-    updateGob,
-} from './state.js';
+import { getRandomHP, getRandomDamage, } from './utils.js';
+import { gobFaces } from './components/Gobs.js';
 
-import logCombatEvent from './components/CombatLog.js';
-import createNewGob from './components/NewGob.js';
-import createGobs from './components/Gobs.js';
-import createPlayer, { Player } from './components/Player.js';
+//player section
+var playerHP = 10;
+const playerHPDisplay = document.querySelector('#player-hp-display');
+playerHPDisplay.textContent = playerHP;
 
-const CombatLog = logCombatEvent(document.querySelector('#combat-log'));
 
-const Gobs = createGobs(document.querySelector('#enemy-container'), {
-    handleAttackGob: (gob) => {
-        if (state.attackDamage === 0){setCombatEvent('you missed');}
-        else if (state.attackDamage === 1){
-            gob.hp - state.attackDamage; 
-            setCombatEvent('you did 1 damage');
-            updateGob(gob);
-        }
-        else if (state.attackDamage === 2){
-            gob.hp - state.attackDamage; 
-            setCombatEvent('you did 2 damage');
-            updateGob(gob);
-        }
-        else if (state.attackDamage === 3){
-            gob.hp - state.attackDamage; 
-            setCombatEvent('you did 3 damage');
-            updateGob(gob);
-        }
-        display();
-    } }
 
-);
+//gob section
+const form = document.querySelector('form');
 
-const AddGob = createNewGob(document.querySelector('#new-gob-input'), {
-    handleNewGob: (name) => {
-        const gob = {
-            name: name,
-            hp: state.gob.hp
-        };
-        addGob(gob);
-        display();
-    }
+
+const gobs = [{
+    name: 'gobo',
+    hp: 5,
+}];
+
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const input = new FormData(form);
+
+    const gobName = input.get('name');
+
+    const newGob = {
+        name: gobName,
+        hp: getRandomHP()
+    };
+
+    gobs.push(newGob);
+    gobHandler();
+    console.log(newGob);
+    console.log(gobs);
+    
 });
 
+function handleAttackGob(gob) {
+    gob.hp -= 1;
+    console.log(gob.hp);
+    playerHP -= 1;
 
-function display() {
-    CombatLog({ combatLog: state.combatEvents });
-    Gobs ({ gobs: state.gobs });
-    AddGob({});
+    console.log(gob.hp, playerHP);
+    gobHandler();
 }
 
 
 
+const gobContainer = document.querySelector('#enemy-container');
+function gobHandler() {
+    for (const gob of gobs) {
+        const button = document.createElement('button');
+        button.classList.add('gob');
+
+        button.addEventListener('click', () => {
+            handleAttackGob(gob);
+        });
+
+        const gobNameEl = document.createElement('span');
+        gobNameEl.classList.add('gob-name');
+        gobNameEl.textContent = gob.name;
+
+        const gobHpEl = document.createElement('span');
+        gobHpEl.classList.add('gob-hp');
+        gobHpEl.textContent = gob.hp;
+        console.log('logging', gob.hp);
+
+        const gobFaceEl = document.createElement('span');
+        gobFaceEl.classList.add('gob-faces');
+        console.log(gob);
+        if (gobFaces[gob.hp]){
+            console.log('here');
+            gobFaceEl.textContent = gobFaces[gob.hp];
+        } else {
+            console.log('here');
+            gobFaceEl.textContent = gobFaces[gob.hp];}
+
+        if (gob.hp === 0) {
+            gobNameEl.classList.add('dead-gob');
+        }
+        button.append(gobNameEl, gobFaceEl);
+        gobContainer.append(button);
+
+        return button;
+    }}
+//combat log section
+
+const combatLog = [];
+
+function display() {
+
+}
+
 display();
+gobHandler();

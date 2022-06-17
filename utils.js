@@ -1,11 +1,6 @@
-export function getRandomIndex(max) {
-    return Math.floor(Math.random() * max);
+export function getRandomHP() {
+    return Math.floor(Math.random() * 6) + 1;
 }
-console.log(getRandomIndex);
-
-export function getRandomItem(array) {
-    const random = getRandomIndex(array.length);
-    const item = array[random];
-    return item;
+export function getRandomDamage() {
+    return Math.floor(Math.random() * 3);
 }
-console.log(getRandomItem);
