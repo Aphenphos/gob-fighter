@@ -39,12 +39,11 @@ form.addEventListener('submit', (e) => {
 });
 
 function handleAttackGob(gob) {
-    gob.hp -= 1;
+    gob.hp -= getRandomDamage();
     console.log(gob.hp);
-    playerHP -= 1;
+    playerHP -= getRandomDamage();
 
     console.log(gob.hp, playerHP);
-    gobHandler();
 }
 
 
@@ -66,17 +65,13 @@ function gobHandler() {
         const gobHpEl = document.createElement('span');
         gobHpEl.classList.add('gob-hp');
         gobHpEl.textContent = gob.hp;
-        console.log('logging', gob.hp);
 
         const gobFaceEl = document.createElement('span');
         gobFaceEl.classList.add('gob-faces');
         console.log(gob);
         if (gobFaces[gob.hp]){
-            console.log('here');
             gobFaceEl.textContent = gobFaces[gob.hp];
-        } else {
-            console.log('here');
-            gobFaceEl.textContent = gobFaces[gob.hp];}
+        }
 
         if (gob.hp === 0) {
             gobNameEl.classList.add('dead-gob');
