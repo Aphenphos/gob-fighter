@@ -5,12 +5,22 @@ import createAddGob from './components/addGob.js';
 import state, { addCombatEvent, addGob, updateGobs, } from './state.js';
 import { displayCombatLog } from './components/Message.js';
 //player section
+
 let playerHP = 10;
+let totalKills = 0;
 
+function displayPlayerInfo() {
+    const playerHPDisplay = document.querySelector('#player-hp-display');
+    playerHPDisplay.textContent = `Player HP: ${playerHP}`;
+    if (playerHP < 1) {
+        if (confirm('Game Over!')){
+            window.location.reload();  
+        }
+    }
 
-const playerHPDisplay = document.querySelector('#player-hp-display');
-playerHPDisplay.textContent = playerHP;
-
+    const totalKillsDisplay = document.querySelector('#player-kill-display');
+    totalKillsDisplay.textContent = `Player Kills: ${totalKills}`;
+}
 
 
 //gob section
@@ -27,11 +37,14 @@ const Gobs = createGobs(document.querySelector('#enemy-container'), {
             gobDamage = getRandomDamage();
             state.gobs[index].hp -= playerDamage;
             playerHP -= gobDamage;
-            if (state.gobs[index].hp < 0) state.gobs[index].hp = 0;
-            generateMessage(playerDamage, gobDamage);
+            if (state.gobs[index].hp < 0) {state.gobs[index].hp = 0; }
+            if (state.gobs[index].hp === 0) totalKills++;
             updateGobs();
-            console.log(gob.hp, playerHP);
+            generateMessage(playerDamage, gobDamage);
+            displayCombatLog();
+            console.log(playerDamage);
             display();
+            
         }
     }
 });
@@ -53,7 +66,8 @@ const AddGob = createAddGob(document.querySelector('#new-gob-input'), {
 //combatLog
 
 function generateMessage(playerDamage, gobDamage) {
-    const combatEvent = `you did ${playerDamage} damage and took ${gobDamage} damage`;
+    
+    let combatEvent = `you did ${playerDamage} damage and took ${gobDamage} damage`;
     addCombatEvent(combatEvent);
     console.log(state.combatLog);
 }
@@ -64,7 +78,7 @@ function generateMessage(playerDamage, gobDamage) {
 function display() {
     Gobs({ gobs: state.gobs });
     AddGob({});
-    displayCombatLog({});
+    displayPlayerInfo({});
 }
 
 display();

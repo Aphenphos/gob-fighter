@@ -5,6 +5,7 @@ export default function createAddGob(root, { handleAddGob }) {
         e.preventDefault();
         const input = new FormData(form);
         handleAddGob(input.get('name'));
+        form.reset();
     });
 
     return () => { };

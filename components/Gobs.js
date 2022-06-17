@@ -34,6 +34,7 @@ export function Gob({ gob, handleAttackGob, index }) {
   
     if (gob.hp === 0) {
         button.classList.add('#dead-gob');
+        button.disabled = true;
     }
     button.append(gobNameEl, gobFaceEl, gobHpEl);
 
