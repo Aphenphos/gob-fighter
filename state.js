@@ -1,16 +1,32 @@
-// set state to an empty object
 const state = {};
 
-// initialize state, also used in test
+
 export function initialize() {
-    // What is the initial shape of state?
-    // For example:
-    // state.game = null;
-    // state.pastGames = [];
+
+    state.gobs = [
+        { name: 'gobo', hp: 5, }
+    ];
+
+    state.gobFaces = ['X_x', 'O_O', '(◣_◢)', '<>_<>', '<>_<>', '<>_<>', '<>_<>', '<>_<>'];
+
+    state.combatLog = [];
 }
-// call initialize
+
 initialize();
-// export state as primary (default) export
+
 export default state;
 
-// export dispatch functions that modify state
+export function addGob(gob) {
+    state.gobs.push(gob);
+}
+
+export function updateGobs(gob) {
+    const index = state.gobs.indexOf(gob);
+    if (index !== -1) {
+        state.gobs[index] = gob;
+    }
+}
+
+export function addCombatEvent(message) {
+    state.combatLog.push(message);
+}

@@ -1,1 +1,33 @@
 /* CSS for home page (index.html) */
+#player-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 5em;
+}
+
+#combat-log {
+    display: grid;
+    grid-gap: 6px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    overflow: scroll;
+}
+
+#new-gob-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#enemy-box {
+    display: flex;
+}
+
+.gob {
+    max-height: 200px;
+    min-height: 45px;
+    max-width: 200px;
+    min-width: 45px;
+    overflow:visible
+}
