@@ -1,6 +1,8 @@
 
 import { getRandomHP, getRandomDamage, } from './utils.js';
-import { gobFaces } from './components/Gobs.js';
+import createGobs, { } from './components/Gobs.js';
+import createAddGob from './components/addGob.js';
+import state, { addGob, updateGobs } from './state.js';
 
 //player section
 var playerHP = 10;
@@ -10,84 +12,39 @@ playerHPDisplay.textContent = playerHP;
 
 
 //gob section
-const form = document.querySelector('form');
-
-
-const gobs = [{
-    name: 'gobo',
-    hp: 5,
-}];
-
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const input = new FormData(form);
-
-    const gobName = input.get('name');
-
-    const newGob = {
-        name: gobName,
-        hp: getRandomHP()
-    };
-
-    gobs.push(newGob);
-    gobHandler();
-    console.log(newGob);
-    console.log(gobs);
-    
+//creates gobs and handles attacks
+const Gobs = createGobs(document.querySelector('#enemy-container'), {
+    handleAttackGob: (gob) => {
+        if (state.gob.hp > -1) {
+            gob.hp -= getRandomDamage();
+            playerHP -= getRandomDamage(); 
+            updateGobs();
+            console.log(gob.hp, playerHP);
+        }
+        display();
+    }
 });
 
-function handleAttackGob(gob) {
-    gob.hp -= getRandomDamage();
-    console.log(gob.hp);
-    playerHP -= getRandomDamage();
 
-    console.log(gob.hp, playerHP);
-}
+//handles new goblins and generates their hp
+const AddGob = createAddGob(document.querySelector('#new-gob-input'), {
+    handleAddGob: (name) => {
+        const gob = {
+            name: name,
+            hp: getRandomHP(),
+        };
+        addGob(gob);
+        display();    
+    }
+});
 
 
 
-const gobContainer = document.querySelector('#enemy-container');
-function gobHandler() {
-    for (const gob of gobs) {
-        const button = document.createElement('button');
-        button.classList.add('gob');
 
-        button.addEventListener('click', () => {
-            handleAttackGob(gob);
-        });
-
-        const gobNameEl = document.createElement('span');
-        gobNameEl.classList.add('gob-name');
-        gobNameEl.textContent = gob.name;
-
-        const gobHpEl = document.createElement('span');
-        gobHpEl.classList.add('gob-hp');
-        gobHpEl.textContent = gob.hp;
-
-        const gobFaceEl = document.createElement('span');
-        gobFaceEl.classList.add('gob-faces');
-        console.log(gob);
-        if (gobFaces[gob.hp]){
-            gobFaceEl.textContent = gobFaces[gob.hp];
-        }
-
-        if (gob.hp === 0) {
-            gobNameEl.classList.add('dead-gob');
-        }
-        button.append(gobNameEl, gobFaceEl);
-        gobContainer.append(button);
-
-        return button;
-    }}
-//combat log section
-
-const combatLog = [];
 
 function display() {
-
+    Gobs({ gobs: state.gobs });
+    AddGob({});
 }
 
 display();
-gobHandler();
