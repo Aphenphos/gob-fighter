@@ -5,20 +5,19 @@ import state, { } from '../state.js';
 export default function createGobs(root, { handleAttackGob }) {
     return ({ gobs }) => {
         root.innerHTML = '';
-
-        for (const gob of gobs) {
-            const gobEl = Gob({ gob, handleAttackGob });
-            root.append(gobEl);
-        }
+        gobs.forEach((gob, index) => {
+            const gobEl = Gob({ gob, handleAttackGob, index });
+            root.append(gobEl); 
+        });
     };
 }
 
-export function Gob({ gob, handleAttackGob }) {
+export function Gob({ gob, handleAttackGob, index }) {
     const button = document.createElement('button');
     button.classList.add('gob');
 
     button.addEventListener('click', () => {
-        handleAttackGob(gob);
+        handleAttackGob(gob, index);
     });
 
     const gobNameEl = document.createElement('span');
@@ -33,6 +32,9 @@ export function Gob({ gob, handleAttackGob }) {
     gobFaceEl.classList.add('gob-faces');
     gobFaceEl.textContent = state.gobFaces[gob.hp];
   
+    if (gob.hp === 0) {
+        button.classList.add('#dead-gob');
+    }
     button.append(gobNameEl, gobFaceEl, gobHpEl);
 
     return button;

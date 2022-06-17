@@ -26,3 +26,7 @@ export function updateGobs(gob) {
         state.gobs[index] = gob;
     }
 }
+
+export function addCombatEvent(message) {
+    state.combatLog.push(message);
+}
